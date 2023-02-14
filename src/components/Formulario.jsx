@@ -1,7 +1,8 @@
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
 import styled from '@emotion/styled'
 import useSelectMonedas from '../hooks/useSelectMonedas'
 import { monedas } from '../data/monedas'
+import Error from './Error'
 
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
@@ -36,8 +37,13 @@ const InputSubmit = styled.input`
 
 function Formulario() {
 
+    const [criptos, setCriptos] = useState ([])
+    const [error, setError] = useState (false)
+
     // Usando el hook 
     const [ moneda, SelectMonedas ] = useSelectMonedas('Elige tu Moneda', monedas)
+    const [ criptomoneda, SelectCriptoMoneda ] = useSelectMonedas('Elige tu Cripto', criptos)
+
     
     useEffect(() => {
         const consultarAPI = async () => {
@@ -46,9 +52,32 @@ function Formulario() {
             const respuesta = await fetch(url)
             const resultado = await respuesta.json()
             console.log(resultado.Data)
+
+            const arrayCriptos = resultado.Data.map(cripto => {
+                const objeto = {
+                    id: cripto.CoinInfo.Name,
+                    nombre: cripto.CoinInfo.FullName
+                }
+                return objeto
+            })
+
+            setCriptos(arrayCriptos)
+
         }
         consultarAPI();
     }, [])
+
+    const handleSubmit = e => {
+        e.preventDefault()
+
+        if([moneda, criptomoneda].includes('')){
+            setError(true)
+
+            return
+        }
+
+        setError(false)
+    }
 
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
@@ -56,17 +85,23 @@ function Formulario() {
 // Funcion de la vista
 
   return (
-    <form>
+    <>
+        {error && <Error> Porfavor seleccione una opcion </Error>}
 
-        <SelectMonedas />
+        <form
+        onSubmit={handleSubmit}>
 
-        
-        
-        <InputSubmit
-            type="submit"
-            value="cotizar" 
-        />
-    </form>
+            <SelectMonedas />
+            <SelectCriptoMoneda />
+
+            
+            
+            <InputSubmit
+                type="submit"
+                value="cotizar" 
+            />
+        </form>
+    </>
   )
 }
 
