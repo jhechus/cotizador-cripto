@@ -1,6 +1,12 @@
 import { useState } from 'react'
 import styled from '@emotion/styled'
+import Formulario from './components/Formulario'
 import ImagenCripto from './img/imagen-criptos.png'
+
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+
+// Diseñando estilos
 
 //creando estilos para el contenedor
 const Contenedor = styled.div`
@@ -42,6 +48,11 @@ const Heading = styled.h1`
   }
 `
 
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+
+// Función principal del componente
+
 function App() {
   return (
   <Contenedor> 
@@ -52,6 +63,7 @@ function App() {
 
     <div>
       <Heading> Cotiza Criptomonedas al Instante </Heading>
+      <Formulario />
     </div>
   </Contenedor>
   )
