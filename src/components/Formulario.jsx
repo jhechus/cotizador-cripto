@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import useSelectMonedas from '../hooks/useSelectMonedas'
+import { monedas } from '../data/monedas'
 
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
@@ -34,9 +35,9 @@ const InputSubmit = styled.input`
 
 function Formulario() {
 
-    // Usando el hook "useSelectMonedas" para traer los datos de monedas
-    const [ SelectMonedas ] = useSelectMonedas()
-    SelectMonedas()
+    // Usando el hook 
+    const [ SelectMonedas ] = useSelectMonedas('Elige tu Moneda', monedas)
+    
 
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -46,10 +47,13 @@ function Formulario() {
 
   return (
     <form>
-      <InputSubmit
-        type="submit"
-        value="cotizar" 
-      />
+
+        <SelectMonedas />
+        
+        <InputSubmit
+            type="submit"
+            value="cotizar" 
+        />
     </form>
   )
 }

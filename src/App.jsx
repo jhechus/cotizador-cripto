@@ -52,7 +52,6 @@ const Heading = styled.h1`
 //////////////////////////////////////////////////////////////////////////////////////
 
 // Función principal del componente
-
 function App() {
   return (
   <Contenedor> 
